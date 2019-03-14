@@ -3,7 +3,6 @@ HELP.md
 /build/
 !gradle/wrapper/gradle-wrapper.jar
 
-src/main/resources/application.properties
 
 ### STS ###
 .apt_generated
@@ -20,6 +19,7 @@ src/main/resources/application.properties
 *.iml
 *.ipr
 /out/
+application.properties
 
 ### NetBeans ###
 /nbproject/private/
