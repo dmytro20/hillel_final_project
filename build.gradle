@@ -26,7 +26,6 @@ dependencies {
 	compile 'org.springframework.boot:spring-boot-starter-data-mongodb'
 	compile 'org.flywaydb:flyway-core'
 
-	runtimeOnly 'mysql:mysql-connector-java'
 	testCompile 'org.springframework.boot:spring-boot-starter-test'
 	compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '1.5.19.RELEASE'
 	compile group: 'org.postgresql', name: 'postgresql', version: '42.2.5'
