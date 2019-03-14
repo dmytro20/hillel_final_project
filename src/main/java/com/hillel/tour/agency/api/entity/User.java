@@ -1,7 +1,7 @@
 package com.hillel.tour.agency.api.entity;
 
 
-import org.jetbrains.annotations.Contract;
+
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -83,7 +83,6 @@ public class User {
         return this;
     }
 
-    @Contract(value = "null -> false", pure = true)
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
