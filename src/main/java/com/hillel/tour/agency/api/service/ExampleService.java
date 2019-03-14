@@ -1,6 +1,5 @@
 package com.hillel.tour.agency.api.service;
 
-public interface ExampleService
-{
+public interface ExampleService {
     String getTestString();
 }

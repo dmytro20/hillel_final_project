@@ -5,13 +5,13 @@ import com.hillel.tour.agency.api.entity.Login;
 import com.hillel.tour.agency.api.entity.User;
 import com.hillel.tour.agency.api.mapper.UserMapper;
 import com.hillel.tour.agency.api.repository.dao.UserValidationDao;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.hillel.tour.agency.api.service.ExampleService;
+import org.springframework.stereotype.Service;
 
-public class UserValidationService {
-    @Autowired
+@Service
+public class UserValidationService implements ExampleService {
+
     private UserValidationDao userValidationDao;
-
-    @Autowired
     private UserMapper userMapper;
 
     public void register(UserDto userDto){
@@ -24,4 +24,8 @@ public class UserValidationService {
         return userMapper.mapToDto(user);
     }
 
+    @Override
+    public String getTestString() {
+        throw new UnsupportedOperationException();
+    }
 }

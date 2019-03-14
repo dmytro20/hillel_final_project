@@ -22,10 +22,20 @@ public class UserMapper implements RowMapper<User> {
     }
 
     public User mapToEntity(UserDto userDto){
-        return null;
+        return new User().setId(userDto.getId())
+                .setLogin(userDto.getLogin())
+                .setFirstName(userDto.getFirstName())
+                .setLastName(userDto.getLastName())
+                .setPassword(userDto.getPassword())
+                .setRole(userDto.getRole());
     }
 
     public UserDto mapToDto(User user){
-        return null;
+        return new UserDto().setId(user.getId())
+                .setLogin(user.getLogin())
+                .setFirstName(user.getFirstName())
+                .setLastName(user.getLastName())
+                .setPassword(user.getPassword())
+                .setRole(user.getRole());
     }
 }
