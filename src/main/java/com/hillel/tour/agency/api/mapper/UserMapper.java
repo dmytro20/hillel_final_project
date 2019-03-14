@@ -1,5 +1,6 @@
 package com.hillel.tour.agency.api.mapper;
 
+import com.hillel.tour.agency.api.dto.UserDto;
 import com.hillel.tour.agency.api.entity.User;
 import org.springframework.jdbc.core.RowMapper;
 
@@ -18,5 +19,13 @@ public class UserMapper implements RowMapper<User> {
         user.setPassword(rs.getString("password_hash"));
         user.setRole(rs.getString("role"));
         return user;
+    }
+
+    public User mapToEntity(UserDto userDto){
+        return null;
+    }
+
+    public UserDto mapToDto(User user){
+        return null;
     }
 }
