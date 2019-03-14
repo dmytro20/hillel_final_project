@@ -1,5 +1,6 @@
 package com.hillel.tour.agency.api.entity;
 
+
 import org.jetbrains.annotations.Contract;
 
 import javax.persistence.*;
