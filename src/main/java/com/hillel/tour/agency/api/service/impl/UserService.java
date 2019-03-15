@@ -2,12 +2,14 @@ package com.hillel.tour.agency.api.service.impl;
 
 import com.hillel.tour.agency.api.entity.User;
 import com.hillel.tour.agency.api.repository.postgre.UserRepository;
-import com.hillel.tour.agency.api.service.Service;
+import com.hillel.tour.agency.api.service.Services;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-public class UserService implements Service {
+@Service
+public class UserService implements Services {
     @Autowired
     UserRepository userRepository;
 
