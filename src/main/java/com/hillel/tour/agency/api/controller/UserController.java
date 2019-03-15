@@ -3,22 +3,18 @@ package com.hillel.tour.agency.api.controller;
 
 import com.hillel.tour.agency.api.dto.UserDto;
 import com.hillel.tour.agency.api.entity.Login;
-import com.hillel.tour.agency.api.service.ExampleService;
+import com.hillel.tour.agency.api.exceptions.MyException;
 import com.hillel.tour.agency.api.service.impl.UserValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class UserController implements Controller {
+    @Autowired
     private UserValidationService userValidationService;
 
-    @Autowired
-    public UserController(@Qualifier("userValidationService") ExampleService exampleService){
-        this.userValidationService = (UserValidationService) exampleService;
-    }
 
     @PostMapping
     public void registerUser(Integer id, String login, String firstName,
@@ -42,7 +38,7 @@ public class UserController implements Controller {
            String[] result = {userDto.getLogin(),userDto.getRole()};
            return result;
         }else {
-            return null;
+           throw new MyException("Login/password not valid");
         }
     }
 }

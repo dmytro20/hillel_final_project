@@ -1,6 +1,5 @@
 package com.hillel.tour.agency.api.controller;
 
-import com.hillel.tour.agency.api.service.ExampleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class ExampleController {
-    private ExampleService exampleService;
+  /*  private ExampleService exampleService;
 
     @Autowired
     public ExampleController(@Qualifier("exampleServiceImpl") ExampleService exampleService) {
@@ -42,6 +41,6 @@ public class ExampleController {
     @DeleteMapping("/example")
     public void deleteExampleString() {
     }
-
+*/
 
 }
