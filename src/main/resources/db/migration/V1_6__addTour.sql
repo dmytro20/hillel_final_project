@@ -1,0 +1,1 @@
+INSERT INTO tours (id, name, contry, status, type, rating, comment) VALUES (?,?,?,?,?,?,?);
