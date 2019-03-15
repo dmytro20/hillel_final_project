@@ -17,18 +17,22 @@ public class UserValidationService {
 
     private UserMapper userMapper;
 
-    public void register(UserDto userDto){
-        if(userDto != null) {
+    public void register(UserDto userDto) {
+        if (userDto != null) {
             User user = userMapper.mapToEntity(userDto);
             userRepository.save(user);
-        }else {
-            throw new MyException("User data is null");
+        } else {
+            throw new MyException("User data must be not null");
         }
     }
 
-    public UserDto validate(Login login){
+    public UserDto validate(Login login, Integer id) {
+        User user = userRepository.findOne(id);
+        if(login.getUserName() == user.getLogin() &&
+        login.getUserPassword() == user.getPassword()){
+            return userMapper.mapToDto(user);
+        }else throw new MyException("Invalid login/password/id");
 
-       return null;
     }
 
 }

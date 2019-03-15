@@ -30,15 +30,15 @@ public class UserController implements Controller {
     }
 
     @GetMapping
-    public String[] validate(String login, String password ) {
-        if(login != null && password != null){
+    public String[] validate(String login, String password,Integer id) {
+        if(login != null && password != null && id != null){
            UserDto userDto = userValidationService.validate(new Login()
                     .setUserName(login)
-                    .setUserPassword(password));
+                    .setUserPassword(password), id);
            String[] result = {userDto.getLogin(),userDto.getRole()};
            return result;
         }else {
-           throw new MyException("Login/password not valid");
+           throw new MyException("Login/password/id must be not null");
         }
     }
 }
