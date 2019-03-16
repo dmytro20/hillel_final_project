@@ -1,1 +1,3 @@
 ALTER TABLE tours ADD COLUMN price INTEGER;
+
+ALTER TABLE tours RENAME COLUMN contry TO country;
