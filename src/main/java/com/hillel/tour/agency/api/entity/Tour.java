@@ -1,7 +1,6 @@
 package com.hillel.tour.agency.api.entity;
 
 import javax.persistence.*;
-import java.util.UUID;
 
 @Entity
 @Table(name = "tours")
