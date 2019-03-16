@@ -1,6 +1,6 @@
 package com.hillel.tour.agency.api.service.impl;
 
-import com.hillel.tour.agency.api.entity.User;
+import com.hillel.tour.agency.api.dto.UserDTO;
 import com.hillel.tour.agency.api.repository.mongo.UserMongoRepository;
 import com.hillel.tour.agency.api.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +18,13 @@ public class UserServiceImpl implements UserService
     }
 
     @Override
-    public User create(User user)
+    public UserDTO create(UserDTO userDTO)
     {
         //TODO VALIDATION????
 
-        if (!userMongoRepository.findByLogin(user.getLogin()).isEmpty())
+        if (!userMongoRepository.findByLogin(userDTO.getLogin()).isEmpty())
             throw new IllegalArgumentException("Login is already taken"); //TODO HANDLE THIS BETTER
 
-        return userMongoRepository.save(user);
+        return userMongoRepository.save(userDTO);
     }
 }

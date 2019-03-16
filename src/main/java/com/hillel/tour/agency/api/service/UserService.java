@@ -1,8 +1,8 @@
 package com.hillel.tour.agency.api.service;
 
-import com.hillel.tour.agency.api.entity.User;
+import com.hillel.tour.agency.api.dto.UserDTO;
 
 public interface UserService
 {
-    User create(User user);
+    UserDTO create(UserDTO userDTO);
 }
