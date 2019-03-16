@@ -14,7 +14,7 @@ public class TourController {
     private TourService tourService;
 
     @Autowired
-    public  TourController(TourServiceImpl tourService) {
+    public  TourController(TourService tourService) {
         this.tourService = tourService;
     }
 
