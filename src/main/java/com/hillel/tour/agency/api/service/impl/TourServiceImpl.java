@@ -1,20 +1,25 @@
 package com.hillel.tour.agency.api.service.impl;
 
 import com.hillel.tour.agency.api.entity.Tour;
+import com.hillel.tour.agency.api.repository.postgre.TourRepository;
 import com.hillel.tour.agency.api.service.TourService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.stereotype.Service;
 
+
+@Service
 public class TourServiceImpl implements TourService {
 
+    private TourRepository tourRepository;
+
     @Autowired
-    public TourServiceImpl() {
+    public TourServiceImpl(TourRepository tourRepository) {
+        this.tourRepository = tourRepository;
     }
 
     @Override
-    @RequestMapping(value = "/tourId{tourId}")
-    public Tour getTourById(@PathVariable("tourId") String tourId) {
-        return new Tour();
+    public Tour getTourById(Integer id) {
+        return tourRepository.findOne(id);
+
     }
 }

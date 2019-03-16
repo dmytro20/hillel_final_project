@@ -4,5 +4,5 @@ import com.hillel.tour.agency.api.entity.Tour;
 
 public interface TourService {
 
-    Tour getTourById(String tourId);
+    Tour getTourById(Integer id);
 }
