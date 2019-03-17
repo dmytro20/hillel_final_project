@@ -1,14 +1,18 @@
 package com.hillel.tour.agency.api.entity;
 
+import com.hillel.tour.agency.api.dto.UserDto;
+import com.hillel.tour.agency.api.authorization.Role;
+
 import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User{
+
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     @Column(name = "login")
@@ -24,7 +28,18 @@ public class User {
     private String lastName;
 
     @Column(name = "role")
-    private String role;
+    private Role role;
+
+    public User(){
+    }
+
+    public User(UserDto dto){
+        this.id = dto.getId();
+        this.login = dto.getLogin();
+        this.firstName = dto.getFirstName();
+        this.lastName = dto.getLastName();
+        this.role = Role.USER;
+    }
 
     public Integer getId() {
         return id;
@@ -71,11 +86,11 @@ public class User {
         return this;
     }
 
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public User setRole(String role) {
+    public User setRole(Role role) {
         this.role = role;
         return this;
     }
@@ -85,7 +100,7 @@ public class User {
         if (this == o) return true;
         if (!(o instanceof User)) return false;
         User user = (User) o;
-        return Objects.equals(getId(), user.getId()) &&
+        return Objects.equals(getId(), getId()) &&
                 getLogin().equals(user.getLogin()) &&
                 getPassword().equals(user.getPassword()) &&
                 Objects.equals(getFirstName(), user.getFirstName()) &&
@@ -101,7 +116,7 @@ public class User {
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("User{");
-        sb.append("id=").append(id);
+        sb.append("id=").append(getId());
         sb.append(", login='").append(login).append('\'');
         sb.append(", password='").append(password).append('\'');
         sb.append(", firstName='").append(firstName).append('\'');

@@ -1,10 +1,8 @@
 package com.hillel.tour.agency.api.service.impl;
 
 import com.hillel.tour.agency.api.dto.UserDto;
-import com.hillel.tour.agency.api.entity.Login;
+import com.hillel.tour.agency.api.validation.UserValidationService;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 public class UserValidationServiceTest {
 

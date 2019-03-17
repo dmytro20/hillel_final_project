@@ -1,44 +1,95 @@
 package com.hillel.tour.agency.api.controller;
 
 
+import com.hillel.tour.agency.api.authentification.Credentials;
+import com.hillel.tour.agency.api.authentification.Session;
 import com.hillel.tour.agency.api.dto.UserDto;
-import com.hillel.tour.agency.api.entity.Login;
-import com.hillel.tour.agency.api.exceptions.MyException;
-import com.hillel.tour.agency.api.service.impl.UserValidationService;
+import com.hillel.tour.agency.api.entity.User;
+import com.hillel.tour.agency.api.mapper.impl.UserMapper;
+import com.hillel.tour.agency.api.service.impl.UserService;
+import com.hillel.tour.agency.api.validation.UserValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
 
 @RestController
-public class UserController implements Controller {
+public class UserController implements Controller <UserDto, Integer>{
     @Autowired
     private UserValidationService userValidationService;
-
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private UserMapper mapper;
+    @Autowired
+    private static Session session;
 
     @PostMapping
-    public void registerUser(Integer id, String login, String firstName,
-                             String lastName, String password, String role){
-        UserDto userDto = new UserDto()
-                .setId(id)
-                .setLogin(login)
-                .setFirstName(firstName)
-                .setLastName(lastName)
-                .setPassword(password)
-                .setRole(role);
-        userValidationService.register(userDto);
+    public ResponseEntity<UserDto> login(Credentials credentials){
+        session = Session.getInstance();
+        UserDto dto = mapper.mapToDto(userService.get(credentials));
+        if(dto != null) {
+            session.add(credentials, dto);
+            return new ResponseEntity<>(dto, HttpStatus.ACCEPTED);
+        }
+        else return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
     }
 
-    @GetMapping
-    public String[] validate(String login, String password,Integer id) {
-        if(login != null && password != null && id != null){
-           UserDto userDto = userValidationService.validate(new Login()
-                    .setUserName(login)
-                    .setUserPassword(password), id);
-           String[] result = {userDto.getLogin(),userDto.getRole()};
-           return result;
+    @GetMapping("/id {id}")
+    @Override
+    public ResponseEntity<UserDto> get(@PathVariable Integer id) {
+        UserDto dto = mapper.mapToDto(userService.get(id));
+        return new ResponseEntity<>(dto, HttpStatus.OK);
+    }
+
+    @PostMapping
+    @Override
+    public ResponseEntity<UserDto> post(@RequestBody UserDto dto){
+        if(userValidationService.validate(dto)){
+            return new ResponseEntity<>(dto, HttpStatus.CREATED);
         }else {
-           throw new MyException("Login/password/id must be not null");
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+
+    @PostMapping
+    @Override
+    public ResponseEntity<UserDto> update(@RequestBody UserDto dto) {
+        if(userValidationService.validate(dto)){
+            this.userService.save(mapper.mapToEntity(dto));
+            return new ResponseEntity<>(dto, HttpStatus.OK);
+        }else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping("/id {id}")
+    @Override
+    public ResponseEntity <UserDto> delete(@PathVariable Integer id) {
+        UserDto dto = mapper.mapToDto(userService.get(id));
+        if(dto == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        userService.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+    @GetMapping
+    @Override
+    public ResponseEntity<List<UserDto>> getAll(){
+        List<User> users = userService.getAll();
+        if(users == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        List<UserDto> result = new ArrayList<>();
+        for (User user: users){
+            result.add(new UserDto(user));
+        }
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+
 }
