@@ -6,7 +6,9 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.List;
 
 
-public interface UserMongoRepository extends MongoRepository<UserDTO, String>{
-
+public interface UserMongoRepository extends MongoRepository<UserDTO, String>
+{
     List<UserDTO> findByLogin(String login);
+
+    UserDTO findById(String id);
 }

@@ -1,13 +1,17 @@
 package com.hillel.tour.agency.api.entity;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "users")
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity(name = "users")
 public class User
 {
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //Use identity, hibernate breaks otherwise
+    private Integer id;
 
     private String login;
     private String firstName;
@@ -24,7 +28,13 @@ public class User
         this.role = role;
     }
 
-    public User(){}
+    public User(String login, String passwordHash)
+    {
+        this.login = login;
+        this.passwordHash = passwordHash;
+    }
+
+    public User() {}  //JSON doesn't work without default constructor ??
 
     @Override
     public String toString()
@@ -39,12 +49,12 @@ public class User
                 '}';
     }
 
-    public String getId()
+    public Integer getId()
     {
         return id;
     }
 
-    public void setId(String id)
+    public void setId(Integer id)
     {
         this.id = id;
     }
