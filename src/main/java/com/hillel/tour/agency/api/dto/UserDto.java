@@ -1,6 +1,5 @@
 package com.hillel.tour.agency.api.dto;
 
-import com.hillel.tour.agency.api.authentification.Credentials;
 import com.hillel.tour.agency.api.entity.User;
 
 import javax.persistence.Entity;

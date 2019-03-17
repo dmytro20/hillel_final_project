@@ -39,7 +39,7 @@ public class UserController implements Controller<UserDto, Integer> {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping("/id {id}")
+    @GetMapping("/users/get/id {id}")
     @Override
     public ResponseEntity<UserDto> get(@PathVariable Integer id) {
         UserDto dto = mapper.mapToDto(userService.get(id));
@@ -67,7 +67,7 @@ public class UserController implements Controller<UserDto, Integer> {
         }
     }*/
 
-    @PostMapping("/id {id}")
+    @PostMapping("users/delete/id {id}")
     @Override
     public ResponseEntity<UserDto> delete(@PathVariable Integer id) {
         UserDto dto = mapper.mapToDto(userService.get(id));
@@ -78,7 +78,7 @@ public class UserController implements Controller<UserDto, Integer> {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping
+    @GetMapping("users/all")
     @Override
     public ResponseEntity<List<UserDto>> getAll() {
         List<User> users = userService.getAll();
@@ -91,6 +91,4 @@ public class UserController implements Controller<UserDto, Integer> {
         }
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
-
-
 }
