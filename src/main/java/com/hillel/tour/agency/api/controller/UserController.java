@@ -34,9 +34,9 @@ public class UserController implements Controller<UserDto, Integer> {
         UserDto dto = mapper.mapToDto(userService.get(credentials));
         if (userValidationService.validate(dto)) {
             session.add(credentials.getUsername(), dto);
-            return new ResponseEntity<>(dto, HttpStatus.ACCEPTED);
+            return new ResponseEntity<>(dto, HttpStatus.OK);
         } else
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @GetMapping("/id {id}")
@@ -46,7 +46,7 @@ public class UserController implements Controller<UserDto, Integer> {
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
-    @PostMapping
+ /*   @PostMapping
     @Override
     public ResponseEntity<UserDto> post(@RequestBody UserDto dto) {
         if (userValidationService.validate(dto)) {
@@ -65,7 +65,7 @@ public class UserController implements Controller<UserDto, Integer> {
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-    }
+    }*/
 
     @PostMapping("/id {id}")
     @Override
