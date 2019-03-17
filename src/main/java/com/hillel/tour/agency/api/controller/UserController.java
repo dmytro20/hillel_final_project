@@ -18,7 +18,7 @@ import java.util.List;
 
 
 @RestController
-public class UserController implements Controller <UserDto, Integer>{
+public class UserController implements Controller<UserDto, Integer> {
     @Autowired
     private UserValidationService userValidationService;
     @Autowired
@@ -29,16 +29,13 @@ public class UserController implements Controller <UserDto, Integer>{
     private static Session session;
 
     @PostMapping
-    public ResponseEntity<UserDto> login(Credentials credentials){
+    public ResponseEntity<UserDto> login(Credentials credentials) {
         session = Session.getInstance();
         UserDto dto = mapper.mapToDto(userService.get(credentials));
-        if(userValidationService.validate(dto)){
-            if(dto != null) {
-                session.add(credentials.getUsername(), dto);
-                return new ResponseEntity<>(dto, HttpStatus.ACCEPTED);
-            }
-            else return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
-        }else
+        if (userValidationService.validate(dto)) {
+            session.add(credentials.getUsername(), dto);
+            return new ResponseEntity<>(dto, HttpStatus.ACCEPTED);
+        } else
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
@@ -51,10 +48,10 @@ public class UserController implements Controller <UserDto, Integer>{
 
     @PostMapping
     @Override
-    public ResponseEntity<UserDto> post(@RequestBody UserDto dto){
-        if(userValidationService.validate(dto)){
+    public ResponseEntity<UserDto> post(@RequestBody UserDto dto) {
+        if (userValidationService.validate(dto)) {
             return new ResponseEntity<>(dto, HttpStatus.CREATED);
-        }else {
+        } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
@@ -62,33 +59,34 @@ public class UserController implements Controller <UserDto, Integer>{
     @PostMapping
     @Override
     public ResponseEntity<UserDto> update(@RequestBody UserDto dto) {
-        if(userValidationService.validate(dto)){
+        if (userValidationService.validate(dto)) {
             this.userService.save(mapper.mapToEntity(dto));
             return new ResponseEntity<>(dto, HttpStatus.OK);
-        }else {
+        } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
     @PostMapping("/id {id}")
     @Override
-    public ResponseEntity <UserDto> delete(@PathVariable Integer id) {
+    public ResponseEntity<UserDto> delete(@PathVariable Integer id) {
         UserDto dto = mapper.mapToDto(userService.get(id));
-        if(dto == null){
+        if (dto == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         userService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
     @GetMapping
     @Override
-    public ResponseEntity<List<UserDto>> getAll(){
+    public ResponseEntity<List<UserDto>> getAll() {
         List<User> users = userService.getAll();
-        if(users == null){
+        if (users == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         List<UserDto> result = new ArrayList<>();
-        for (User user: users){
+        for (User user : users) {
             result.add(new UserDto(user));
         }
         return new ResponseEntity<>(result, HttpStatus.OK);
