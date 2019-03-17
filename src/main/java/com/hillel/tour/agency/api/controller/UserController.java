@@ -32,11 +32,14 @@ public class UserController implements Controller <UserDto, Integer>{
     public ResponseEntity<UserDto> login(Credentials credentials){
         session = Session.getInstance();
         UserDto dto = mapper.mapToDto(userService.get(credentials));
-        if(dto != null) {
-            session.add(credentials, dto);
-            return new ResponseEntity<>(dto, HttpStatus.ACCEPTED);
-        }
-        else return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        if(userValidationService.validate(dto)){
+            if(dto != null) {
+                session.add(credentials.getUsername(), dto);
+                return new ResponseEntity<>(dto, HttpStatus.ACCEPTED);
+            }
+            else return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        }else
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     @GetMapping("/id {id}")
