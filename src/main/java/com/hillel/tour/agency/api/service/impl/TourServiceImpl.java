@@ -16,7 +16,7 @@ public class TourServiceImpl implements TourService {
 
     @Override
     public Tour addTour(Tour tour) {
-        Tour sevedTour = tourRepository.saveAndFlush(tour);
-        return sevedTour;
+        Tour savedTour = tourRepository.saveAndFlush(tour);
+        return savedTour;
     }
 }

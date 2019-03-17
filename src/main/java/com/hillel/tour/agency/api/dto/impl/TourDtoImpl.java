@@ -16,7 +16,7 @@ public class TourDtoImpl implements EntityDto {
     @Size(min = 2,max = 50)
     private String name;
     @Size(min = 2,max = 50)
-    private String contry;
+    private String country;
     @Size(min = 2,max = 50)
     private String status;
     @Size(min = 2,max = 50)
@@ -30,56 +30,28 @@ public class TourDtoImpl implements EntityDto {
         return id;
     }
 
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getContry() {
-        return contry;
-    }
-
-    public void setContry(String contry) {
-        this.contry = contry;
+    public String getCountry() {
+        return country;
     }
 
     public String getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
     public String getType() {
         return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     public String getRating() {
         return rating;
     }
 
-    public void setRating(String rating) {
-        this.rating = rating;
-    }
-
     public String getComment() {
         return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
     }
 
     @Override
@@ -89,7 +61,7 @@ public class TourDtoImpl implements EntityDto {
         TourDtoImpl tourDto = (TourDtoImpl) o;
         return Objects.equals(id, tourDto.id) &&
                 Objects.equals(name, tourDto.name) &&
-                Objects.equals(contry, tourDto.contry) &&
+                Objects.equals(country, tourDto.country) &&
                 Objects.equals(status, tourDto.status) &&
                 Objects.equals(type, tourDto.type) &&
                 Objects.equals(rating, tourDto.rating) &&
@@ -98,7 +70,7 @@ public class TourDtoImpl implements EntityDto {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, contry, status, type, rating, comment);
+        return Objects.hash(id, name, country, status, type, rating, comment);
     }
 
     @Override
@@ -106,7 +78,7 @@ public class TourDtoImpl implements EntityDto {
         return "TourDtoImpl{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", contry='" + contry + '\'' +
+                ", contry='" + country + '\'' +
                 ", status='" + status + '\'' +
                 ", type='" + type + '\'' +
                 ", rating='" + rating + '\'' +
