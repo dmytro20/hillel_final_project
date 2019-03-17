@@ -1,6 +1,7 @@
 package com.hillel.tour.agency.api.service;
 
 import com.hillel.tour.agency.api.dto.UserDTO;
+import com.hillel.tour.agency.api.entity.User;
 
 import java.util.List;
 
@@ -10,5 +11,5 @@ public interface UserService
 
     List<UserDTO> getPendingUsers();
 
-    void approveUserById(String id);
+    User approveUserById(String id);
 }

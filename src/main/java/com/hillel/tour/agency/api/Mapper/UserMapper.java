@@ -13,8 +13,8 @@ public class UserMapper implements Mapper<UserDTO, User>
     {
         return new User(
                 userDTO.getLogin(),
-                "",
-                "",
+                userDTO.getFirstName(),
+                userDTO.getLastName(),
                 userDTO.getPasswordHash(),
                 "user"
         );

@@ -14,16 +14,9 @@ public class UserDTO
     private String id;
 
     private String login;
+    private String firstName;
+    private String lastName;
     private String passwordHash;
-
-    public UserDTO(String login, String passwordHash)
-    {
-        this.login = login;
-        this.passwordHash = passwordHash;
-    }
-
-    public UserDTO() {}
-
 
     public String getId()
     {
@@ -33,6 +26,16 @@ public class UserDTO
     public String getLogin()
     {
         return login;
+    }
+
+    public String getFirstName()
+    {
+        return firstName;
+    }
+
+    public String getLastName()
+    {
+        return lastName;
     }
 
     public String getPasswordHash()
@@ -46,6 +49,8 @@ public class UserDTO
         return "UserDTO{" +
                 "id='" + id + '\'' +
                 ", login='" + login + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
                 ", passwordHash='" + passwordHash + '\'' +
                 '}';
     }

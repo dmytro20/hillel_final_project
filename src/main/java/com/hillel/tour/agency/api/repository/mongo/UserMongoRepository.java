@@ -9,6 +9,4 @@ import java.util.List;
 public interface UserMongoRepository extends MongoRepository<UserDTO, String>
 {
     List<UserDTO> findByLogin(String login);
-
-    UserDTO findById(String id);
 }

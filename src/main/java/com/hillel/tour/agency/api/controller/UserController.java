@@ -1,8 +1,11 @@
 package com.hillel.tour.agency.api.controller;
 
 import com.hillel.tour.agency.api.dto.UserDTO;
+import com.hillel.tour.agency.api.entity.User;
 import com.hillel.tour.agency.api.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,27 +27,47 @@ public class UserController
     }
 
     @PostMapping(value = "/users/register", consumes = {"application/json"})
-    public UserDTO submitUser(@RequestBody UserDTO userDTO)
+    public ResponseEntity<UserDTO> submitUser(@RequestBody UserDTO userDTO)
     {
         if (!Validator.validateUserDTO(userDTO))
-            throw new IllegalArgumentException("BAD"); //english is difficult today
-        return userService.submitUser(userDTO);
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+
+        ResponseEntity<UserDTO> response;
+        try
+        {
+            response = new ResponseEntity<>(userService.submitUser(userDTO), HttpStatus.CREATED);
+        } catch (IllegalArgumentException e)
+        {
+            response = new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+
+        return response;
     }
 
     // ADMIN ONLY FUNCTIONALITY
 
     @GetMapping("/users/pending")
-    public List<UserDTO> getPendingUsers() //?? English is difficult
+    public ResponseEntity<List<UserDTO>> getPendingUsers()
     {
-        return userService.getPendingUsers();
+        return new ResponseEntity<>(userService.getPendingUsers(), HttpStatus.OK);
     }
 
     @PostMapping("/users/approve/{id}")
-    public void approveUserById(@PathVariable String id)
+    public ResponseEntity<User> approveUserById(@PathVariable String id)
     {
         if (!Validator.validateId(id))
-            throw new IllegalArgumentException("Bad Id");
-        userService.approveUserById(id);
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+
+        ResponseEntity<User> response;
+        try
+        {
+            response =new ResponseEntity<>(userService.approveUserById(id), HttpStatus.CREATED);
+        } catch (IllegalArgumentException e)
+        {
+            response = new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+
+        return response;
     }
 
 
@@ -54,12 +77,14 @@ public class UserController
         {
             return (userDTO != null &&
                     userDTO.getLogin().matches("[a-zA-Z0-9_]{1,100}") &&
+                    userDTO.getFirstName().matches("[a-zA-Z0-9_]{1,100}") &&
+                    userDTO.getLastName().matches("[a-zA-Z0-9_]{1,100}") &&
                     userDTO.getPasswordHash().matches("[a-zA-Z0-9]{1,255}"));
         }
 
         public static boolean validateId(String id)
         {
-            return id.matches("[a-fA-F0-9]{24}");
+            return id != null && id.matches("[a-fA-F0-9]{24}");
         }
     }
 }

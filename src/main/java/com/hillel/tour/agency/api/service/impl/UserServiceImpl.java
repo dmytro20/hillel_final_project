@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService
     {
         // Checks if the specified login is taken
         if (!userMongoRepository.findByLogin(userDTO.getLogin()).isEmpty())
-            throw new IllegalArgumentException("Login is already taken"); //TODO HANDLE THIS BETTER
+            throw new IllegalArgumentException("Login is already taken");
 
         if (!userPostgresRepository.findByLogin(userDTO.getLogin()).isEmpty())
             throw new IllegalArgumentException(("Login is already taken"));
@@ -49,12 +49,14 @@ public class UserServiceImpl implements UserService
     }
 
     @Override
-    public void approveUserById(String id)
+    public User approveUserById(String id)
     {
-        UserDTO toBeApproved = userMongoRepository.findById(id);
+        UserDTO toBeApproved = userMongoRepository.findOne(id);
         if (toBeApproved == null)
             throw new IllegalArgumentException("User not found in pending");
 
-        userPostgresRepository.save(userMapper.map(toBeApproved));
+        User approvedUser = userPostgresRepository.save(userMapper.map(toBeApproved));
+        userMongoRepository.delete(id);
+        return approvedUser;
     }
 }
