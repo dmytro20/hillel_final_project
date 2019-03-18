@@ -1,6 +1,6 @@
 package com.hillel.tour.agency.api.service.impl;
 
-import com.hillel.tour.agency.api.Mapper.Mapper;
+import com.hillel.tour.agency.api.mapper.Mapper;
 import com.hillel.tour.agency.api.dto.UserDTO;
 import com.hillel.tour.agency.api.entity.User;
 import com.hillel.tour.agency.api.repository.mongo.UserMongoRepository;
@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserService
         if (toBeApproved == null)
             throw new IllegalArgumentException("User not found in pending");
 
-        User approvedUser = userPostgresRepository.save(userMapper.map(toBeApproved));
+        User approvedUser = userPostgresRepository.save(userMapper.mapToEntity(toBeApproved));
         userMongoRepository.delete(id);
         return approvedUser;
     }
