@@ -13,16 +13,17 @@ import javax.persistence.Table;
 public class Tour {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    private UUID guid;
     private String name;
     private String country;
-    private String status;
-    private String type;
+    private TourStatus status;
+    private TourType type;
     private String rating;
     private String comment;
 
-    public Tour setId(UUID id) {
+    public Tour setId(Integer id) {
         this.id = id;
         return this;
     }
@@ -37,12 +38,14 @@ public class Tour {
         return this;
     }
 
-    public Tour setStatus(String status) {
+    public Tour setStatus(TourStatus status)
+    {
         this.status = status;
         return this;
     }
 
-    public Tour setType(String type) {
+    public Tour setType(TourType type)
+    {
         this.type = type;
         return this;
     }
@@ -54,6 +57,17 @@ public class Tour {
 
     public Tour setComment(String comment) {
         this.comment = comment;
+        return this;
+    }
+
+    public UUID getGuid()
+    {
+        return guid;
+    }
+
+    public Tour setGuid(UUID guid)
+    {
+        this.guid = guid;
         return this;
     }
 
@@ -89,7 +103,7 @@ public class Tour {
         return Objects.hash(id, name, country, status, type, rating, comment);
     }
 
-    public UUID getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -101,11 +115,13 @@ public class Tour {
         return country;
     }
 
-    public String getStatus() {
+    public TourStatus getStatus()
+    {
         return status;
     }
 
-    public String getType() {
+    public TourType getType()
+    {
         return type;
     }
 

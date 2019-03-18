@@ -1,5 +1,7 @@
 package com.hillel.tour.agency.api.mapper;
 
 public interface Mapper<DTO,Entity> {
-    Entity mapToEntity (DTO entity);
+    Entity mapToEntity (DTO dto);
+
+    DTO mapToDto(Entity entity);
 }

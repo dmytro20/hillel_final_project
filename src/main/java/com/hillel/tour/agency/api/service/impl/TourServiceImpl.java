@@ -4,19 +4,26 @@ import com.hillel.tour.agency.api.entity.Tour;
 import com.hillel.tour.agency.api.repository.postgre.TourRepository;
 import com.hillel.tour.agency.api.service.TourService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-@org.springframework.stereotype.Service
-public class TourServiceImpl implements TourService {
+import java.util.Optional;
+
+@Service
+public class TourServiceImpl
+    implements TourService
+{
+
     private TourRepository tourRepository;
 
     @Autowired
-    public TourServiceImpl(TourRepository tourRepository) {
+    public TourServiceImpl(TourRepository tourRepository)
+    {
         this.tourRepository = tourRepository;
     }
 
     @Override
-    public Tour addTour(Tour tour) {
-        Tour savedTour = tourRepository.saveAndFlush(tour);
-        return savedTour;
+    public Optional<Tour> addTour(Tour tour)
+    {
+        return Optional.ofNullable(tourRepository.save(tour));
     }
 }

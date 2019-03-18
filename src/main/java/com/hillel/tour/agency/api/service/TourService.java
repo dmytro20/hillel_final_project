@@ -2,6 +2,9 @@ package com.hillel.tour.agency.api.service;
 
 import com.hillel.tour.agency.api.entity.Tour;
 
-public interface TourService {
-    Tour addTour(Tour tour);
+import java.util.Optional;
+
+public interface TourService
+{
+    Optional<Tour> addTour(Tour tour);
 }
