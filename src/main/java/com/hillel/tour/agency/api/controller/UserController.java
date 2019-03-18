@@ -43,7 +43,7 @@ public class UserController implements Controller<UserDto, Integer> {
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
- /*   @PostMapping
+    @PostMapping("/users/post/dto {dto}")
     @Override
     public ResponseEntity<UserDto> post(@RequestBody UserDto dto) {
         if (userValidationService.validate(dto)) {
@@ -53,7 +53,7 @@ public class UserController implements Controller<UserDto, Integer> {
         }
     }
 
-    @PostMapping
+    @PostMapping("/users/update/dto {dto}")
     @Override
     public ResponseEntity<UserDto> update(@RequestBody UserDto dto) {
         if (userValidationService.validate(dto)) {
@@ -62,7 +62,7 @@ public class UserController implements Controller<UserDto, Integer> {
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-    }*/
+    }
 
     @PostMapping("users/delete/id {id}")
     @Override
