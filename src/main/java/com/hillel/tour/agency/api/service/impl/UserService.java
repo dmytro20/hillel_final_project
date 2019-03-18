@@ -1,6 +1,7 @@
 package com.hillel.tour.agency.api.service.impl;
 
 import com.hillel.tour.agency.api.authentification.Credentials;
+import com.hillel.tour.agency.api.authentification.SecurityContextHolder;
 import com.hillel.tour.agency.api.entity.User;
 import com.hillel.tour.agency.api.repository.postgre.UserRepository;
 import com.hillel.tour.agency.api.service.Services;
@@ -22,8 +23,8 @@ public class UserService implements Services <User, Integer> {
     public User get(Credentials credentials){
         List<User> list = userRepository.findAll();
         for (User user: list){
-            if(user.getLogin() == credentials.getUsername()
-            && user.getPassword() == credentials.getPassword()){
+            if(user.getLogin().equals(credentials.getUsername())
+            && user.getPassword().equals(credentials.getPassword())){
                 return user;
             }
         }
@@ -36,8 +37,14 @@ public class UserService implements Services <User, Integer> {
     }
 
     @Override
-    public User update(User user) {  //todo : realize me
-        return null;
+    public User update(User user) {
+        User current = SecurityContextHolder.getLoggedUser();
+        current.setLogin(user.getLogin())
+                .setFirstName(user.getFirstName())
+                .setLastName(user.getLastName())
+                .setPassword(user.getPassword());
+
+        return save(current);
     }
 
     @Override

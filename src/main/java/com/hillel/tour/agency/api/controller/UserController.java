@@ -2,6 +2,7 @@ package com.hillel.tour.agency.api.controller;
 
 
 import com.hillel.tour.agency.api.authentification.Credentials;
+import com.hillel.tour.agency.api.authentification.SecurityContextHolder;
 import com.hillel.tour.agency.api.authentification.Session;
 import com.hillel.tour.agency.api.dto.UserDto;
 import com.hillel.tour.agency.api.entity.User;
@@ -25,15 +26,12 @@ public class UserController implements Controller<UserDto, Integer> {
     private UserService userService;
     @Autowired
     private UserMapper mapper;
-    @Autowired
-    private static Session session;
 
-    @PostMapping
-    public ResponseEntity<UserDto> login(Credentials credentials) {
-        session = Session.getInstance();
+    @PostMapping("/users/login")
+    public ResponseEntity<UserDto> login(@PathVariable Credentials credentials) {
         UserDto dto = mapper.mapToDto(userService.get(credentials));
         if (userValidationService.validate(dto)) {
-            session.add(credentials.getUsername(), dto);
+            SecurityContextHolder.setLoggedUser(mapper.mapToEntity(dto));
             return new ResponseEntity<>(dto, HttpStatus.OK);
         } else
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
