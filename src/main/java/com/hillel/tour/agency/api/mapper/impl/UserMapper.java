@@ -7,11 +7,11 @@ import org.springframework.stereotype.Component;
 
 
 @Component
-public class UserMapper implements Mapper<UserDto,User> {
+public class UserMapper implements Mapper<UserDto,User> { //todo delete
 
     @Override
     public User mapToEntity(UserDto userDto){
-        return new User(userDto);
+        return new User();
     }
 
     @Override

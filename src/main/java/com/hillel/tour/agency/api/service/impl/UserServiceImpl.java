@@ -1,16 +1,19 @@
 package com.hillel.tour.agency.api.service.impl;
 
-import com.hillel.tour.agency.api.authentification.Credentials;
+import com.hillel.tour.agency.api.auth.Credentials;
 import com.hillel.tour.agency.api.entity.User;
 import com.hillel.tour.agency.api.repository.postgre.UserRepository;
-import com.hillel.tour.agency.api.service.Services;
+import com.hillel.tour.agency.api.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
-@Service
-public class UserService implements Services <User, Integer> {
+@Component
+public class UserServiceImpl
+    implements UserService
+{
     @Autowired
     UserRepository userRepository;
 
@@ -19,15 +22,9 @@ public class UserService implements Services <User, Integer> {
         return userRepository.findOne(id);
     }
 
-    public User get(Credentials credentials){
-        List<User> list = userRepository.findAll();
-        for (User user: list){
-            if(user.getLogin() == credentials.getUsername()
-            && user.getPassword() == credentials.getPassword()){
-                return user;
-            }
-        }
-        return null;
+    @Override
+    public Optional<User> getUser(String userName){
+        return Optional.ofNullable(userRepository.findByLogin(userName));
     }
 
     @Override

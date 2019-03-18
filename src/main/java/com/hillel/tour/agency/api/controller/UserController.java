@@ -1,47 +1,44 @@
 package com.hillel.tour.agency.api.controller;
 
-
-import com.hillel.tour.agency.api.authentification.Credentials;
-import com.hillel.tour.agency.api.authentification.Session;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.hillel.tour.agency.api.auth.Credentials;
+import com.hillel.tour.agency.api.auth.Session;
 import com.hillel.tour.agency.api.dto.UserDto;
 import com.hillel.tour.agency.api.entity.User;
 import com.hillel.tour.agency.api.mapper.impl.UserMapper;
-import com.hillel.tour.agency.api.service.impl.UserService;
+import com.hillel.tour.agency.api.service.UserService;
 import com.hillel.tour.agency.api.validation.UserValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @RestController
-public class UserController implements Controller<UserDto, Integer> {
+@RequestMapping("/users")
+public class UserController extends Controller
+{
     @Autowired
-    private UserValidationService userValidationService;
+    private UserValidationService userValidationService;//todo: create/use Utils class
     @Autowired
-    private UserService userService;
+    private UserService           userService;
     @Autowired
-    private UserMapper mapper;
-    @Autowired
-    private static Session session;
+    private UserMapper            mapper;
 
-    @PostMapping
-    public ResponseEntity<UserDto> login(Credentials credentials) {
-        session = Session.getInstance();
-        UserDto dto = mapper.mapToDto(userService.get(credentials));
-        if (userValidationService.validate(dto)) {
-            session.add(credentials.getUsername(), dto);
-            return new ResponseEntity<>(dto, HttpStatus.OK);
-        } else
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
+    @GetMapping("/{id}")
+    public ResponseEntity<UserDto> getUser(@PathVariable Integer id, HttpServletRequest request)
+    {
+        auth(request);
 
-    @GetMapping("/users/get/id {id}")
-    @Override
-    public ResponseEntity<UserDto> get(@PathVariable Integer id) {
         UserDto dto = mapper.mapToDto(userService.get(id));
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
@@ -67,26 +64,30 @@ public class UserController implements Controller<UserDto, Integer> {
         }
     }*/
 
-    @PostMapping("users/delete/id {id}")
-    @Override
-    public ResponseEntity<UserDto> delete(@PathVariable Integer id) {
+    @PostMapping("users/delete/id {id}")  //For delete you should use HTTP method DELETE and path = users/{id}
+    //todo: TAA-13 not include this requirement, should be deleted
+    public ResponseEntity<UserDto> delete(@PathVariable Integer id)
+    {
         UserDto dto = mapper.mapToDto(userService.get(id));
-        if (dto == null) {
+        if (dto == null)
+        {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         userService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("users/all")
-    @Override
-    public ResponseEntity<List<UserDto>> getAll() {
+    @GetMapping //todo: TAA-13 not include this requirement, should be deleted
+    public ResponseEntity<List<UserDto>> getAll()
+    {
         List<User> users = userService.getAll();
-        if (users == null) {
+        if (users == null)
+        {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         List<UserDto> result = new ArrayList<>();
-        for (User user : users) {
+        for (User user : users)
+        {
             result.add(new UserDto(user));
         }
         return new ResponseEntity<>(result, HttpStatus.OK);

@@ -1,7 +1,6 @@
 package com.hillel.tour.agency.api.entity;
 
 import com.hillel.tour.agency.api.dto.UserDto;
-import com.hillel.tour.agency.api.authorization.Role;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -28,18 +27,7 @@ public class User{
     private String lastName;
 
     @Column(name = "role")
-    private Role role;
-
-    public User(){
-    }
-
-    public User(UserDto dto){
-        this.id = dto.getId();
-        this.login = dto.getLogin();
-        this.firstName = dto.getFirstName();
-        this.lastName = dto.getLastName();
-        this.role = Role.USER;
-    }
+    private String role;
 
     public Integer getId() {
         return id;
@@ -86,26 +74,27 @@ public class User{
         return this;
     }
 
-    public Role getRole() {
+    public String getRole() {
         return role;
     }
 
-    public User setRole(Role role) {
+    public User setRole(String role) {
         this.role = role;
         return this;
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof User)) return false;
+    public boolean equals(Object o)
+    {
+        if (this == o) { return true; }
+        if (o == null || getClass() != o.getClass()) { return false; }
         User user = (User) o;
-        return Objects.equals(getId(), getId()) &&
-                getLogin().equals(user.getLogin()) &&
-                getPassword().equals(user.getPassword()) &&
-                Objects.equals(getFirstName(), user.getFirstName()) &&
-                Objects.equals(getLastName(), user.getLastName()) &&
-                getRole() == user.getRole();
+        return Objects.equals(id, user.id) &&
+               Objects.equals(login, user.login) &&
+               Objects.equals(password, user.password) &&
+               Objects.equals(firstName, user.firstName) &&
+               Objects.equals(lastName, user.lastName) &&
+               Objects.equals(role, user.role);
     }
 
     @Override
