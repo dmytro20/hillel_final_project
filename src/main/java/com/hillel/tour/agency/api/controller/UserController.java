@@ -3,7 +3,6 @@ package com.hillel.tour.agency.api.controller;
 
 import com.hillel.tour.agency.api.authentification.Credentials;
 import com.hillel.tour.agency.api.authentification.SecurityContextHolder;
-import com.hillel.tour.agency.api.authentification.Session;
 import com.hillel.tour.agency.api.dto.UserDto;
 import com.hillel.tour.agency.api.entity.User;
 import com.hillel.tour.agency.api.mapper.impl.UserMapper;
