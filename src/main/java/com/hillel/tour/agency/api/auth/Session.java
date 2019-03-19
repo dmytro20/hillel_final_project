@@ -17,10 +17,9 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Component
-public class Session
-{
+public class Session {
     private static final Integer TOKEN_LIFE_TIME = 60 * 60 * 1000; //3600000 mc = 1h
-    private static final String  SIGN            = ":hillel";
+    private static final String SIGN = ":hillel";
 
     private Map<String, Credentials> session;
 
@@ -28,20 +27,16 @@ public class Session
     private UserService _userService;
 
     @PostConstruct
-    private void init()
-    {
-        if (session == null)
-        {
+    private void init() {
+        if (session == null) {
             session = new LinkedHashMap<>();
         }
     }
 
-    public Token authorize(Credentials creds)
-    {
+    public Token authorize(Credentials creds) {
         Optional<User> user = _userService.getUser(creds.getUsername());
 
-        if (!user.isPresent() || !user.get().getPassword().equals(creds.getPassword()))
-        {
+        if (!user.isPresent() || !user.get().getPassword().equals(creds.getPassword())) {
             throw new UserAuthException();
         }
 
@@ -52,36 +47,31 @@ public class Session
         return new Token(token, new Date(creds.getCreatedDate()));
     }
 
-    public Optional<User> getAuthority(String token)
-    {
+    public Optional<User> getAuthority(String token) {
         Objects.requireNonNull(token);
 
         Credentials credentials = session.get(token);
 
-        if (credentials == null || credentials.getCreatedDate() - System.currentTimeMillis() > TOKEN_LIFE_TIME)
-        {
+        if (credentials == null || credentials.getCreatedDate() - System.currentTimeMillis() > TOKEN_LIFE_TIME) {
             throw new InvalidAuthTokenException();
         }
 
         return _userService.getUser(credentials.getUsername());
     }
 
-    public boolean idAuthorized(String token)
-    {
+    public boolean idAuthorized(String token) {
         Objects.requireNonNull(token);
 
         Credentials credentials = session.get(token);
 
-        if (credentials == null || credentials.getCreatedDate() - System.currentTimeMillis() > TOKEN_LIFE_TIME)
-        {
+        if (credentials == null || credentials.getCreatedDate() - System.currentTimeMillis() > TOKEN_LIFE_TIME) {
             throw new InvalidAuthTokenException();
         }
 
         return true;
     }
 
-    public void unauthorize(String token)
-    {
+    public void unauthorize(String token) {
         session.remove(token);
     }
 

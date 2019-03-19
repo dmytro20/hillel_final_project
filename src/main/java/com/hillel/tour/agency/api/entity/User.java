@@ -1,7 +1,5 @@
 package com.hillel.tour.agency.api.entity;
 
-import com.hillel.tour.agency.api.dto.UserDto;
-
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -27,7 +25,10 @@ public class User{
     private String lastName;
 
     @Column(name = "role")
-    private String role;
+    private Role role;
+
+    public User(){
+    }
 
     public Integer getId() {
         return id;
@@ -74,11 +75,11 @@ public class User{
         return this;
     }
 
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public User setRole(String role) {
+    public User setRole(Role role) {
         this.role = role;
         return this;
     }

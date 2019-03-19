@@ -1,4 +1,4 @@
-package com.hillel.tour.agency.api.validation;
+package com.hillel.tour.agency.api.utils;
 
 import com.hillel.tour.agency.api.dto.UserDto;
 import com.hillel.tour.agency.api.repository.postgre.UserRepository;
@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserValidationService {
+public class UserUtil {
 
     @Autowired
     UserRepository userRepository;

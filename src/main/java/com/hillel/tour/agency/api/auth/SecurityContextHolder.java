@@ -1,4 +1,4 @@
-package com.hillel.tour.agency.api.authentification;
+package com.hillel.tour.agency.api.auth;
 
 import com.hillel.tour.agency.api.entity.User;
 import org.springframework.stereotype.Component;
