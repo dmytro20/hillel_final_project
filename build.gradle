@@ -32,4 +32,7 @@ dependencies {
 	compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '1.5.19.RELEASE'
 	compile group: 'org.postgresql', name: 'postgresql', version: '42.2.5'
 
+	compile group: 'commons-codec', name: 'commons-codec', version: '1.12'
+
+
 }
