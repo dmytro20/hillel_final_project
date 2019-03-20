@@ -45,6 +45,5 @@ public class UserServiceImpl
     public List<User> getAll() {
 
         return userRepository.findAll();
-
     }
 }
