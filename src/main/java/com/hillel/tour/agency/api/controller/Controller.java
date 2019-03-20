@@ -21,7 +21,7 @@ public abstract class Controller {
 
     @PostMapping(value = "/login")
     public ResponseEntity<Token> login(@RequestBody LoginDto loginDto) {
-        if (!LoginDto.validate(loginDto)) {
+        if (!validate(loginDto)) {
             throw new InvalidAuthTokenException();
         }
         Token token = session.authorize(new Credentials(loginDto.getUsername(), loginDto.getPassword()));
@@ -63,15 +63,12 @@ public abstract class Controller {
         public void setPassword(String password) {
             this.password = password;
         }
+    }
 
-        private static boolean validate(LoginDto loginDto){
-            if(loginDto.getPassword() != null &&
-                    loginDto.getUsername() != null &&
-                    loginDto.getUsername().length() > 0 &&
-                    loginDto.getPassword().length() > 0 )
-                return true;
-            else
-                return false;
-        }
+    private static boolean validate(LoginDto loginDto){// todo: regex
+        return loginDto.getPassword() != null &&
+               loginDto.getUsername() != null &&
+               loginDto.getUsername().length() > 0 &&
+               loginDto.getPassword().length() > 0;
     }
 }

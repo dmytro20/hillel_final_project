@@ -1,6 +1,5 @@
 package com.hillel.tour.agency.api.service.impl;
 
-import com.hillel.tour.agency.api.auth.Credentials;
 import com.hillel.tour.agency.api.entity.User;
 import com.hillel.tour.agency.api.repository.postgre.UserRepository;
 import com.hillel.tour.agency.api.service.UserService;
